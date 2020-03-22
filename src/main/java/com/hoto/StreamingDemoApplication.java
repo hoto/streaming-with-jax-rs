@@ -1,6 +1,5 @@
 package com.hoto;
 
-import com.hoto.resources.StreamingResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -23,7 +22,8 @@ public class StreamingDemoApplication extends Application<StreamingDemoConfigura
     @Override
     public void run(StreamingDemoConfiguration configuration,
                     Environment environment) {
-        environment.jersey().register(new StreamingResource());
+        StreamingResource streamingResource = new StreamingResource(new JsonStreamer());
+        environment.jersey().register(streamingResource);
     }
 
 }
