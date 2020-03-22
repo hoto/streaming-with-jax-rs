@@ -10,20 +10,31 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
-@Path("/")
-@Produces(MediaType.APPLICATION_JSON)
+@Path("/stream")
 public class StreamingResource {
 
     private final JsonStreamer jsonStreamer;
+    private final LineStreamer lineStreamer;
 
-    public StreamingResource(JsonStreamer jsonStreamer) {
+    public StreamingResource(JsonStreamer jsonStreamer, LineStreamer lineStreamer) {
         this.jsonStreamer = jsonStreamer;
+        this.lineStreamer = lineStreamer;
     }
 
     @Timed
     @GET
-    @Path("/stream")
-    public Response test(@QueryParam("items") int items) {
+    @Path("/lines")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response lines(@QueryParam("items") int items) {
+        StreamingOutput so = output -> lineStreamer.stream(items, output);
+        return Response.ok(so).build();
+    }
+
+    @Timed
+    @GET
+    @Path("/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response json(@QueryParam("items") int items) {
         StreamingOutput so = output -> jsonStreamer.stream(items, output);
         return Response.ok(so).build();
     }

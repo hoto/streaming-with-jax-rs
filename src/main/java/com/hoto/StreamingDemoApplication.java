@@ -14,7 +14,7 @@ public class StreamingDemoApplication extends Application<StreamingDemoConfigura
 
     @Override
     public String getName() {
-        return "Streaming REST API Demo";
+        return "Streaming with JAX-RS";
     }
 
     @Override
@@ -24,7 +24,7 @@ public class StreamingDemoApplication extends Application<StreamingDemoConfigura
     @Override
     public void run(StreamingDemoConfiguration configuration,
                     Environment environment) {
-        StreamingResource streamingResource = new StreamingResource(new JsonStreamer());
+        var streamingResource = new StreamingResource(new JsonStreamer(), new LineStreamer());
 
         JerseyEnvironment jersey = environment.jersey();
         jersey.property(ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER, 0);
