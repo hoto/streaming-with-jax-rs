@@ -29,16 +29,15 @@ Legend:
 
 ### Changing Jersey buffer size
 
-Jersey buffer is disabled with `ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER=0`
+Jersey buffer size is controlled with `ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER` property.
 
-This is only for demo purposes so that jersey sends a message to the caller whenever we write even the smallest
-message to the buffer.
-Otherwise the jersey buffer would have to grow substantially for jersey to flush it.
+Giving it a zero value will make jersey send a response message whenever anything is flushed from an OutputStream.
 In production you don't want to manipulate the buffer length unless you know what you are doing.
+I've set it to 0 for demonstration purposes.
 
-Remove or change the value in `StreamingDemoApplication` and then check the difference in behaviour.
+Remove or change the value in `StreamingDemoApplication.java` and then check the difference in behaviour.
 
-From Jersey source:
+From Jersey source code:
 
 ```
 OUTBOUND_CONTENT_LENGTH_BUFFER
