@@ -23,12 +23,21 @@ public class StreamingResource {
 
     @Timed
     @GET
+    @Path("/simple/lines")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response lines(@QueryParam("items") int items) {
+        StreamingOutput so = output -> lineStreamer.simpleStream(output, items);
+        return Response.ok(so).build();
+    }
+
+    @Timed
+    @GET
     @Path("/lines")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response lines(@QueryParam("items") int sleepms,
-                          @QueryParam("items") int buffer,
-                          @QueryParam("items") int items) {
-        StreamingOutput so = output -> lineStreamer.stream(sleepms, items, buffer, output);
+    public Response lines(@QueryParam("items") int items,
+                          @QueryParam("buffer") int chunkBufferSize,
+                          @QueryParam("sleep") int sleepInMs) {
+        StreamingOutput so = output -> lineStreamer.advancedStream(output, items, chunkBufferSize, sleepInMs);
         return Response.ok(so).build();
     }
 
@@ -37,7 +46,7 @@ public class StreamingResource {
     @Path("/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response json(@QueryParam("items") int items) {
-        StreamingOutput so = output -> jsonStreamer.stream(items, output);
+        StreamingOutput so = output -> jsonStreamer.stream(output, items);
         return Response.ok(so).build();
     }
 

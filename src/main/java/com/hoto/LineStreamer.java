@@ -1,26 +1,52 @@
 package com.hoto;
 
 import java.io.OutputStream;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.String.format;
 
 public class LineStreamer {
 
     /**
-     *  Stream lines in form of:
-     *
-     *  line 1
-     *  line 2
-     *  line 3
+     * Stream lines:
+     * line 1
+     * line 2
+     * line 3
      */
-    public void stream(int sleepms, int buffer, int items, OutputStream stream) {
+    public void simpleStream(OutputStream stream, int items) {
         try {
             for (int i = 1; i <= items; i++) {
                 stream.write(format("line %s\n", i).getBytes());
                 stream.flush();
-                if (i % 1000 == 0) {
-                    System.out.println("sleeping...");
-                    Thread.sleep(1000);
+            }
+            stream.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Stream lines and sleep in between chunks:
+     * line 1
+     * line 2
+     * sleeping for 1000ms...
+     * line 3
+     * line 4
+     */
+    public void advancedStream(OutputStream stream,
+                               int items,
+                               int chunkBufferSize,
+                               int sleepInMs) {
+        try {
+            for (int i = 1; i <= items; i++) {
+                stream.write(format("line %s\n", i).getBytes());
+                stream.flush();
+                if (i % chunkBufferSize == 0) {
+                    String sleeping = format("sleeping for %sms...\n", sleepInMs);
+                    System.out.println(sleeping);
+                    stream.write(sleeping.getBytes());
+                    stream.flush();
+                    TimeUnit.MILLISECONDS.sleep(sleepInMs);
                 }
             }
             stream.close();

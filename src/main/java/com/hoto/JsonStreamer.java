@@ -18,7 +18,7 @@ public class JsonStreamer {
      * {"item": 3}
      * ]
      */
-    public void stream(int items, OutputStream stream) {
+    public void stream(OutputStream stream, int items) {
         JsonGenerator generator = Json
             .createGeneratorFactory(makeConfig())
             .createGenerator(stream, StandardCharsets.UTF_8);

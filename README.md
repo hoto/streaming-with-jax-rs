@@ -7,16 +7,16 @@ Run from intellij `StreamingDemoApplication.main()` or build and run jar:
     mvn clean package 
     java -jar target/streamingdemo-1.0-SNAPSHOT.jar
 
-    curl --no-buffer "localhost:8080/stream/lines?items=10" 
+    curl --no-buffer "localhost:8080/stream/simple/lines?items=10" 
     curl --no-buffer "localhost:8080/stream/json?items=10" 
     
-    curl --no-buffer "localhost:8080/stream/lines?sleepms=1000&buffer=100&items=1000" 
+    curl --no-buffer "localhost:8080/stream/lines?items=10&buffer=2&sleep=1000" 
     
 Legend:
 
-* `sleepms` - (milisec) how long to sleep after flushing a `buffer` size of `items` - can simulate delay
-* `buffer`  - (quantity) how much `items` to send before sleeping
-* `items`   - (quantity) how much items or lines to produce in response
+* `items`   - (quantity)     how much items or lines to produce in a response
+* `buffer`  - (quantity)     how much items to send before sleeping
+* `sleepms` - (milliseconds) how long to sleep after flushing a `buffer` of `items` - simulates a delay
     
 # Notice
 
