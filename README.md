@@ -1,5 +1,8 @@
 # Streaming with JAX-RS demo
 
+Application demonstrating streaming of text or json outputs from a REST endpoints.
+Using https://www.dropwizard.io/
+
 ## Run
 
 Run from intellij `StreamingDemoApplication.main()` or build and run jar:
@@ -75,3 +78,5 @@ To compare responses with a "non streaming" endpoint run:
     curl --verbose "localhost:8080/stream/control" 
     curl --verbose --no-buffer "localhost:8080/stream/control" 
     
+### TODO
+* Migrate to gradle from maven
