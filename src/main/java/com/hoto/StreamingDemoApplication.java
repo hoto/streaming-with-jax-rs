@@ -24,7 +24,10 @@ public class StreamingDemoApplication extends Application<StreamingDemoConfigura
     @Override
     public void run(StreamingDemoConfiguration configuration,
                     Environment environment) {
-        var streamingResource = new StreamingResource(new JsonStreamer(), new LineStreamer());
+        var streamingResource = new StreamingResource(
+            new LineDropper(),
+            new JsonStreamer(),
+            new LineStreamer());
 
         JerseyEnvironment jersey = environment.jersey();
         jersey.register(streamingResource);

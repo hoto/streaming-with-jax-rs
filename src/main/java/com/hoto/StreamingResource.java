@@ -10,15 +10,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
-import static java.lang.String.format;
-
 @Path("/stream")
 public class StreamingResource {
 
-    private final JsonStreamer jsonStreamer;
+    private final LineDropper lineDropper;
     private final LineStreamer lineStreamer;
+    private final JsonStreamer jsonStreamer;
 
-    public StreamingResource(JsonStreamer jsonStreamer, LineStreamer lineStreamer) {
+    public StreamingResource(LineDropper lineDropper,
+                             JsonStreamer jsonStreamer,
+                             LineStreamer lineStreamer) {
+        this.lineDropper = lineDropper;
         this.jsonStreamer = jsonStreamer;
         this.lineStreamer = lineStreamer;
     }
@@ -28,10 +30,7 @@ public class StreamingResource {
     @Path("/control")
     @Produces(MediaType.TEXT_PLAIN)
     public Response control(@QueryParam("items") int items) {
-        String response = "";
-        for (int i = 1; i <= items; i++) {
-            response = format("line %s", i);
-        }
+        String response = lineDropper.dropLines(items);
         return Response.ok(response).build();
     }
 

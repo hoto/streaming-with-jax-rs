@@ -1,6 +1,6 @@
 # Streaming with JAX-RS demo
 
-Application demonstrating streaming of text or json outputs from a REST endpoints.
+Application demonstrating streaming of text and json outputs from REST endpoints.
 Using https://www.dropwizard.io/
 
 ## Run
@@ -15,6 +15,9 @@ Run from intellij `StreamingDemoApplication.main()` or build and run jar:
     
     curl --no-buffer "localhost:8080/stream/advanced/lines?items=14&buffer=3&sleep=1000" 
     curl --no-buffer "localhost:8080/stream/advanced/json?items=14&buffer=3&sleep=1000" 
+    
+    # no streaming - for comparison
+    curl --verbose --no-buffer "localhost:8080/stream/control?items=10" 
     
 Legend:
 
@@ -40,12 +43,12 @@ From Jersey source:
 ```
 OUTBOUND_CONTENT_LENGTH_BUFFER
 
-An integer value that defines the buffer size used to buffer server-side response entity in order to determine its 
-size and set the value of HTTP "Content-Length"  header.
-If the entity size exceeds the configured buffer size, the buffering would be cancelled and the entity size 
-would not be determined. Value less or equal to zero disable the buffering of the entity at all.
-This property can be used on the server side to override the outbound message buffer size value - default or the global 
-custom value set using the "jersey.config.contentLength.buffer" global property.
+An integer value that defines the buffer size used to buffer server-side response entity in order to
+determine its size and set the value of HTTP "Content-Length"  header.
+If the entity size exceeds the configured buffer size, the buffering would be cancelled and the entity 
+size would not be determined. Value less or equal to zero disable the buffering of the entity at all.
+This property can be used on the server side to override the outbound message buffer size value -
+default or the global custom value set using the "jersey.config.contentLength.buffer" global property.
 
 The default value is 8192.
 ```
@@ -75,8 +78,8 @@ Notice `Transfer-Encoding: chunked` and `Content-Length: n` properties on both c
 
 To compare responses with a "non streaming" endpoint run:
 
-    curl --verbose "localhost:8080/stream/control" 
-    curl --verbose --no-buffer "localhost:8080/stream/control" 
+    curl --verbose "localhost:8080/stream/control?items=10" 
+    curl --verbose --no-buffer "localhost:8080/stream/control?items=10" 
     
 ### TODO
 * Migrate to gradle from maven
