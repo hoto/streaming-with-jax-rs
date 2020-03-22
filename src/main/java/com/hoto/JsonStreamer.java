@@ -7,10 +7,10 @@ import java.io.OutputStream;
 
 public class JsonStreamer {
 
-    public void stream(OutputStream stream) {
+    public void stream(int items, OutputStream stream) {
         JsonGenerator generator = Json.createGenerator(stream);
         generator.writeStartArray();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < items; i++) {
             generator.writeStartObject();
             generator.write("key", i);
             generator.flush();

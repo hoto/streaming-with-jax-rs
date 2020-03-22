@@ -9,7 +9,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-import java.util.Optional;
 
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -23,9 +22,9 @@ public class StreamingResource {
 
     @Timed
     @GET
-    @Path("/test")
-    public Response test(@QueryParam("quantity") Optional<Integer> quantity) {
-        StreamingOutput so = output -> jsonStreamer.stream(output);
+    @Path("/stream")
+    public Response test(@QueryParam("items") int items) {
+        StreamingOutput so = output -> jsonStreamer.stream(items, output);
         return Response.ok(so).build();
     }
 

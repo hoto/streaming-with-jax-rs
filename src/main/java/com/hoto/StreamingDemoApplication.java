@@ -1,8 +1,10 @@
 package com.hoto;
 
 import io.dropwizard.Application;
+import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.glassfish.jersey.server.ServerProperties;
 
 public class StreamingDemoApplication extends Application<StreamingDemoConfiguration> {
 
@@ -23,7 +25,10 @@ public class StreamingDemoApplication extends Application<StreamingDemoConfigura
     public void run(StreamingDemoConfiguration configuration,
                     Environment environment) {
         StreamingResource streamingResource = new StreamingResource(new JsonStreamer());
-        environment.jersey().register(streamingResource);
+
+        JerseyEnvironment jersey = environment.jersey();
+        jersey.property(ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER, 0);
+        jersey.register(streamingResource);
     }
 
 }
