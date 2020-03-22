@@ -30,13 +30,17 @@ public class StreamingDemoApplication extends Application<StreamingDemoConfigura
         jersey.register(streamingResource);
 
         /*
-         * If set to 0 will turn off the jersey buffer.
-         * 0 value will "force" jersey to flush the content every time we call `JsonGenerator.flush()`
-         * no matter how "small" the buffer was at that time.
+         * If set to zero will essentially turn off the jersey buffer.
+         * Zero value will "force" jersey to flush the content every time we call
+         * `OutputStream.flush()` no matter how small the buffer is at that time.
          *
-         * For demo purposes only.
+         * Also notice that the `Content-Length` disappears from the response
+         * to the client if the response is larger then this buffer size.
          */
         jersey.property(ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER, 0);
+//        jersey.property(ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER, 100);
+//        jersey.property(ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER, 1000);
+//        jersey.property(ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER, 8192); //default value
     }
 
 }

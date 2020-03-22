@@ -18,6 +18,7 @@ public class LineStreamer {
             for (int i = 1; i <= items; i++) {
                 stream.write(format("line %s\n", i).getBytes());
                 stream.flush();
+                TimeUnit.MILLISECONDS.sleep(100);
             }
             stream.close();
         } catch (Exception e) {
