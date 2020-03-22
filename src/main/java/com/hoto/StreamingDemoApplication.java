@@ -27,8 +27,16 @@ public class StreamingDemoApplication extends Application<StreamingDemoConfigura
         var streamingResource = new StreamingResource(new JsonStreamer(), new LineStreamer());
 
         JerseyEnvironment jersey = environment.jersey();
-        jersey.property(ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER, 0);
         jersey.register(streamingResource);
+
+        /*
+         * If set to 0 will turn off the jersey buffer.
+         * 0 value will "force" jersey to flush the content every time we call `JsonGenerator.flush()`
+         * no matter how "small" the buffer was at that time.
+         *
+         * For demo purposes only.
+         */
+        jersey.property(ServerProperties.OUTBOUND_CONTENT_LENGTH_BUFFER, 0);
     }
 
 }

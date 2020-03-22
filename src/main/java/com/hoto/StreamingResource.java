@@ -25,8 +25,10 @@ public class StreamingResource {
     @GET
     @Path("/lines")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response lines(@QueryParam("items") int items) {
-        StreamingOutput so = output -> lineStreamer.stream(items, output);
+    public Response lines(@QueryParam("items") int sleepms,
+                          @QueryParam("items") int buffer,
+                          @QueryParam("items") int items) {
+        StreamingOutput so = output -> lineStreamer.stream(sleepms, items, buffer, output);
         return Response.ok(so).build();
     }
 

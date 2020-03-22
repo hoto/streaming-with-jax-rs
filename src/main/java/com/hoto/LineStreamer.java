@@ -7,18 +7,21 @@ import static java.lang.String.format;
 public class LineStreamer {
 
     /**
-     *  Streams lines in form of:
+     *  Stream lines in form of:
      *
      *  line 1
      *  line 2
      *  line 3
      */
-    public void stream(int items, OutputStream stream) {
+    public void stream(int sleepms, int buffer, int items, OutputStream stream) {
         try {
             for (int i = 1; i <= items; i++) {
                 stream.write(format("line %s\n", i).getBytes());
                 stream.flush();
-                Thread.sleep(100);
+                if (i % 1000 == 0) {
+                    System.out.println("sleeping...");
+                    Thread.sleep(1000);
+                }
             }
             stream.close();
         } catch (Exception e) {
