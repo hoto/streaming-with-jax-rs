@@ -22,8 +22,7 @@ public class StreamingDemoApplication extends Application<StreamingDemoConfigura
     }
 
     @Override
-    public void run(StreamingDemoConfiguration configuration,
-                    Environment environment) {
+    public void run(StreamingDemoConfiguration configuration, Environment environment) {
         var streamingResource = new StreamingResource(
             new LineDropper(),
             new JsonStreamer(),

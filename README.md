@@ -10,14 +10,14 @@ Run from intellij `StreamingDemoApplication.main()` or build and run jar:
     mvn clean package 
     java -jar target/streamingdemo-1.0-SNAPSHOT.jar
 
+    # no streaming - for comparison
+    curl --no-buffer "localhost:8080/stream/control?items=10" 
+    
     curl --no-buffer "localhost:8080/stream/simple/lines?items=10" 
     curl --no-buffer "localhost:8080/stream/simple/json?items=10" 
     
     curl --no-buffer "localhost:8080/stream/advanced/lines?items=14&buffer=3&sleep=1000" 
     curl --no-buffer "localhost:8080/stream/advanced/json?items=14&buffer=3&sleep=1000" 
-    
-    # no streaming - for comparison
-    curl --verbose --no-buffer "localhost:8080/stream/control?items=10" 
     
 Legend:
 
